@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="public/css/styles.css" />
+    <title>Login Page</title>
+  </head>
+  <body>
+    <section class="my-container">
+      <div class="left p-25">
+        <header>
+          <img
+            src="https://shahryar.netlify.app/assets/img/light_logo_purple.svg"
+            alt="logo"
+            srcset=""
+            width="80"
+            height="80"
+          />
+          <h1>Hello</h1>
+        </header>
+        <section class="form-wrapper">
+          <header>
+            <h1 class="uppercase">Create an account</h1>
+            <p>Please Enter Your Details</p>
+          </header>
+          <form class="form" id="register">
+            <div class="input-wrapper">
+              <label for="name">Name</label>
+              <input type="text" name="name" id="name" class="input-box" />
+            </div>
+            <div class="input-wrapper">
+              <label for="email">Email</label>
+              <input type="text" name="email" id="email" class="input-box" />
+            </div>
+            <div class="input-wrapper">
+              <label for="age">Age</label>
+              <input
+                type="number"
+                name="age"
+                id="age"
+                class="input-box"
+                min="10"
+              />
+            </div>
+            <div class="input-wrapper">
+              <label for="address">Address</label>
+              <input
+                type="text"
+                name="address"
+                id="address"
+                class="input-box"
+              />
+            </div>
+            <div class="input-wrapper">
+              <label for="image">Image URL</label>
+              <input type="text" name="image" id="image" class="input-box" />
+            </div>
+            <div class="flex pb-4 items-center">
+              <div class="gender-btn" id="male">Male</div>
+              <div class="gender-btn selected" id="female">Female</div>
+            </div>
+            <button class="btn btn-primary">Register</button>
+          </form>
+          <div class="form-footer">
+            Already Have an Account?
+            <span style="color: blue; margin-left: 10px; cursor: pointer"
+              >Sign In</span
+            >
+          </div>
+        </section>
+      </div>
+      <div class="right p-25">
+        <!-- the search box -->
+        <div>
+          <label
+            for="default-search"
+            class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300"
+            >Search</label
+          >
+          <!-- The Search Box -->
+          <div class="relative">
+            <div
+              class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
+            >
+              <svg
+                aria-hidden="true"
+                class="w-5 h-5 text-gray-500 dark:text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                ></path>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-input"
+              value=""
+              class="block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Search email, name, address"
+            />
+            <button
+              type="submit"
+              class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2"
+              id="search-submit"
+            >
+              Search
+            </button>
+          </div>
+        </div>
+        <!-- search query badge -->
+        <div class="my-2 items-center">
+          <span
+            class="bg-blue-200 rounded-lg text-xs py-1 px-2 hidden"
+            id="search-badge-container"
+          >
+            <span class="" id="search-badge"> shahryar </span>
+            <span
+              class="text-red-700 font-bold cursor-pointer hover:text-base ml-1"
+              id="clear-search"
+              >x</span
+            >
+          </span>
+        </div>
+        <!-- age filter box -->
+
+        <div class="flex">
+          <button
+            id="states-button"
+            data-dropdown-toggle="dropdown-states"
+            class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-500 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
+            type="button"
+          >
+            AGE
+          </button>
+          <div
+            id="dropdown-states"
+            class="z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 block"
+            data-popper-reference-hidden=""
+            data-popper-escaped=""
+            data-popper-placement="bottom"
+            style="
+              position: absolute;
+              inset: 0px auto auto 0px;
+              margin: 0px;
+              transform: translate(0px, 72px);
+            "
+          ></div>
+          <label for="states" class="sr-only">Choose an age range</label>
+          <select
+            id="age-input"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-r-lg border-l-gray-100 dark:border-l-gray-700 border-l-2 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          >
+            <option selected="">Choose an age range</option>
+            <option value="10-20">10-20</option>
+            <option value="20-30">20-30</option>
+            <option value="30-40">30-40</option>
+            <option value="40-50">40-50</option>
+          </select>
+        </div>
+        <!-- search query badge -->
+        <div class="my-2 items-center">
+          <span
+            class="bg-blue-200 rounded-lg text-xs py-1 px-2 hidden"
+            id="age-badge-container"
+          >
+            <span class="" id="age-badge"> 10-20 </span>
+            <span
+              class="text-red-700 font-bold cursor-pointer hover:text-base ml-1"
+              id="clear-search"
+              >x</span
+            >
+          </span>
+        </div>
+
+        <div id="user-rows"></div>
+        <!-- user rows dynamically  -->
+
+        <!-- <div class="circle-box"></div> -->
+        <!-- <div class="circle-box-overly"></div> -->
+        <!-- <div class="circle"></div> -->
+        <!-- <div class="half-circle"></div> -->
+      </div>
+    </section>
+
+    <script src="src/index.js" type="module"></script>
+  </body>
+</html>
