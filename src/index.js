@@ -18,8 +18,8 @@
 //
 
 import { saveUser, removeUser } from "./utils/storage.js";
-import { displayUsers } from "./utils/views.js";
-import { handleSearch, handleAgeFilter } from "./utils/utils.js";
+import { displayUsers, setAgeBadges, setSearchBadges } from "./utils/views.js";
+import { handleSearch, handleAgeFilter, handleFilter } from "./utils/utils.js";
 
 // to bind the removeUser to window
 // or add an event Listner to the btn
@@ -35,11 +35,17 @@ const searchBadge = document.getElementById("search-badge");
 const searchBadgeContainer = document.getElementById("search-badge-container");
 const clearSearch = document.getElementById("clear-search");
 // age
-const ageBadge = document.getElementById("age-badge");
-const ageBadgeContainer = document.getElementById("age-badge-container");
+// const ageBadge = document.getElementById("age-badge");
+// const ageBadgeContainer = document.getElementById("age-badge-container");
 const ageInput = document.getElementById("age-input");
 
+// filters from local storage
+const filters = JSON.parse(localStorage.getItem("filters"));
+
+// inital load ui display content
 displayUsers();
+setAgeBadges(filters?.ageLimits);
+setSearchBadges(filters?.searchQuery);
 
 // Handle Selection of male and female
 male.addEventListener("click", (e) => {
@@ -80,24 +86,26 @@ form.addEventListener("submit", (e) => {
 });
 
 // handle search functionality
-searchSubmitBtn.addEventListener("change", () => {
-  if (searchBadgeContainer.classList.contains("hidden")) {
-    searchBadgeContainer.classList.remove("hidden");
-  }
-  searchBadge.innerHTML = searchInput.value;
-  handleSearch(searchInput.value);
+searchSubmitBtn.addEventListener("click", () => {
+  // if (searchBadgeContainer.classList.contains("hidden")) {
+  //   searchBadgeContainer.classList.remove("hidden");
+  // }
+  // searchBadge.innerHTML = searchInput.value;
+  setSearchBadges();
+  // handleSearch(searchInput.value);
+  handleFilter(searchInput.value, ageInput.value);
 });
-searchInput.addEventListener("input", () => {
-  if (searchBadgeContainer.classList.contains("hidden")) {
-    searchBadgeContainer.classList.remove("hidden");
-  }
-  if (!searchInput.value) {
-    searchBadgeContainer.classList.add("hidden");
-  }
-  searchBadge.innerHTML = searchInput.value;
+// searchInput.addEventListener("input", () => {
+//   if (searchBadgeContainer.classList.contains("hidden")) {
+//     searchBadgeContainer.classList.remove("hidden");
+//   }
+//   if (!searchInput.value) {
+//     searchBadgeContainer.classList.add("hidden");
+//   }
+//   searchBadge.innerHTML = searchInput.value;
 
-  handleSearch(searchInput.value);
-});
+//   handleSearch(searchInput.value);
+// });
 // clear all search
 clearSearch.addEventListener("click", () => {
   displayUsers();
@@ -107,9 +115,12 @@ clearSearch.addEventListener("click", () => {
 
 // handle age select filter
 ageInput.addEventListener("change", () => {
-  if (ageBadgeContainer.classList.contains("hidden")) {
-    ageBadgeContainer.classList.remove("hidden");
-  }
-  ageBadge.innerHTML = ageInput.value;
-  handleAgeFilter(ageInput.value);
+  // if (ageBadgeContainer.classList.contains("hidden")) {
+  //   ageBadgeContainer.classList.remove("hidden");
+  // }
+  // ageBadge.innerHTML = ageInput.value;
+  setAgeBadges();
+  handleFilter(searchInput.value, ageInput.value);
+
+  // handleAgeFilter(ageInput.value);
 });
