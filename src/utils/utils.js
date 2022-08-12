@@ -16,14 +16,19 @@ const handleFilter = (searchQuery, ageQuery) => {
   if (searchQuery && ageLimits.length !== 2) {
     //  1 - We have only searchQuery
     filteredUsersAddress = users.filter(
-      (u) => u.address.toLowerCase() == searchQuery.toLowerCase()
+      (u) =>
+        u.address.toLowerCase() == searchQuery.toLowerCase() ||
+        u.name.toLowerCase() == searchQuery.toLowerCase() ||
+        u.email.toLowerCase() == searchQuery.toLowerCase()
     );
     console.log(filteredUsersAddress, "---------1-only search----------");
   } else if (searchQuery && ageLimits.length === 2) {
     //  2 - we have both search and age filters
     filteredUsersAddress = users.filter(
       (u) =>
-        u.address.toLowerCase() == searchQuery.toLowerCase() &&
+        (u.address.toLowerCase() == searchQuery.toLowerCase() ||
+          u.name.toLowerCase() == searchQuery.toLowerCase() ||
+          u.email.toLowerCase() == searchQuery.toLowerCase()) &&
         u.age >= ageLimits[0] &&
         u.age < ageLimits[1]
     );
@@ -40,7 +45,6 @@ const handleFilter = (searchQuery, ageQuery) => {
   }
 
   displayUsers(false, "", filteredUsersAddress);
-  localStorage.setItem("filteredUsers", JSON.stringify(filteredUsersAddress));
   localStorage.setItem(
     "filters",
     JSON.stringify({

@@ -15,7 +15,8 @@ const saveUser = (user) => {
 
 const removeUser = (userEmail) => {
   // console.log("delete");
-  const users = JSON.parse(localStorage.getItem("users"));
+  // const users = JSON.parse(localStorage.getItem("users"));
+  const users = getUsers();
   const filteredUsers = users.filter((u) => u.email != userEmail);
   localStorage.setItem("users", JSON.stringify(filteredUsers));
   displayUsers(false, userEmail);
@@ -31,4 +32,16 @@ const getUserByEmail = (email) => {
   return filteredUser[0];
 };
 
-export { saveUser, removeUser, getUsers, getUserByEmail };
+const editUser = (email, user) => {
+  console.log("eited - " + email);
+  // return;
+  let users = getUsers();
+  users.forEach((u, index) => {
+    if (u.email === email) {
+      return (users[index] = user);
+    }
+  });
+  localStorage.setItem("users", JSON.stringify(users));
+};
+
+export { saveUser, removeUser, getUsers, getUserByEmail, editUser };

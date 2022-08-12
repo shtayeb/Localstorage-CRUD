@@ -7,23 +7,30 @@
   * Done - as a user I should be able to filter user based on: [name, age, email, address]
   * 
   * DONE - User filter data should not reset or removed after page refresh
-    TODO - as a user I should be able to edit a user
+  * DONE - Specific filter removal
+  * DONE - as a user I should be able to edit a user
+  * DONE - add name and email to searchfilter
     TODO - User edit form data should not reset after refreshing the page
     TODO - UX/UI
-    TODO - Clean coding
-    TODO - Alert notification: warning, success, danger
     TODO - Brain Storming 
-    TODO - add name and email to searchfilter
-  
+    TODO - Clean coding
+    TODO - Alert notification: warning, success, danger  
 */
 
-import { saveUser, removeUser } from "./utils/storage.js";
-import { displayUsers, setAgeBadges, setSearchBadges } from "./utils/views.js";
+import { saveUser, removeUser, editUser } from "./utils/storage.js";
+import {
+  displayUsers,
+  setAgeBadges,
+  setSearchBadges,
+  editUserUiUpdate,
+} from "./utils/views.js";
 import { handleFilter, handleRemoveFilter } from "./utils/utils.js";
 
 // to bind the removeUser to window
 // or add an event Listner to the btn
 window.removeUser = removeUser;
+window.editUser = editUser;
+window.editUserUiUpdate = editUserUiUpdate;
 
 const form = document.getElementById("register");
 const male = document.getElementById("male");
@@ -54,6 +61,7 @@ male.addEventListener("click", (e) => {
   female.classList.remove("selected");
   male.classList.add("selected");
 });
+
 // Handle Selection of male and female
 female.addEventListener("click", (e) => {
   male.classList.remove("selected");
@@ -76,12 +84,33 @@ form.addEventListener("submit", (e) => {
     gender,
   };
 
-  if (!user.name && !user.email && !user.image) {
-    return;
-  }
+  // Validation : dont do anything if the inputs are empty
+  if (!user.name && !user.email && !user.image && !user.address) return;
 
-  saveUser(user);
-  displayUsers(true);
+  /*
+    To handle Register and Update
+      1 - check the text of submit-btn
+      2 - if its register, perform register operation by calling saveUser()
+      3 - if its edit, perform update operation by calling editUser()
+  */
+
+  // 1 - check the text of submit-btn
+  const submitBtnTxt = document.getElementById("submit-btn").innerHTML;
+  if (submitBtnTxt === "Register") {
+    // 2 - if its register, perform register operation by calling saveUser()
+    saveUser(user);
+    displayUsers(true);
+  } else if (submitBtnTxt === "Update") {
+    // 3 - if its edit, perform update operation by calling editUser()
+    editUser(user.email, user);
+    // displayUsers(true);
+    window.location.reload();
+  } else {
+    // ! something is seriously wrong reload the page
+    window.location.reload();
+  }
+  // saveUser(user);
+  // displayUsers(true);
   form.reset();
   // console.log(new FormData(form).get("name"));
 });
@@ -98,11 +127,12 @@ ageInput.addEventListener("change", () => {
   handleFilter(searchInput.value, ageInput.value);
 });
 
+// Filter removal listners
 clearSearch.addEventListener("click", () => {
   // we send the age filter to function
   handleRemoveFilter("search", ageInput.value);
 });
 clearAge.addEventListener("click", () => {
-  // we send the search to function
+  // we send the search query to function
   handleRemoveFilter("age", searchInput.value);
 });

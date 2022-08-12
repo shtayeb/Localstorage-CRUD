@@ -1,6 +1,6 @@
 // imports
-import { getUsers } from "./storage.js";
-
+import { getUserByEmail, getUsers } from "./storage.js";
+import { handleFilter } from "./utils.js";
 //variables
 const table = document.getElementById("user-rows");
 const form = document.getElementById("register");
@@ -14,7 +14,7 @@ const ageBadgeContainer = document.getElementById("age-badge-container");
 const ageInput = document.getElementById("age-input");
 
 // functions
-function displayUsers(isNewUser, email, usersList) {
+const displayUsers = (isNewUser, email, usersList) => {
   // only runs when we deleted a user
   if (email) {
     console.log(email + " - " + "deleted");
@@ -25,31 +25,40 @@ function displayUsers(isNewUser, email, usersList) {
   }
 
   const storageUsers = getUsers();
-  const storageFilteredUsers = JSON.parse(
-    localStorage.getItem("filteredUsers")
-  );
+  const filters = JSON.parse(localStorage.getItem("filters"));
+  // console.log(filters);
 
-  let users = [];
+  let users;
   if (isNewUser) {
     // handle the display of new user
     let latestUser = storageUsers.pop();
-    users.push(latestUser);
+    // users.push(latestUser);
+    users = [latestUser];
   } else if (usersList) {
     // only when we give it a users list
-    // console.log("should be here");
+    console.log("we are in userslist");
     table.innerHTML = "";
 
     if (usersList.length > 0) {
       users = usersList;
-      // console.log("userlist> 0");
+      console.log("userlist> 0");
     } else {
-      // console.log("userlist < 0");
+      console.log("userlist < 0");
       // users = storageUsers;
       users = [];
     }
-  } else if (storageFilteredUsers && storageFilteredUsers.length > 0) {
-    users = storageFilteredUsers;
+  } else if (
+    filters &&
+    (filters.ageLimits.length >= 2 || filters.searchQuery)
+  ) {
+    // console.log("we are in the filter param");
+    const ageQuery =
+      filters.ageLimits.length >= 2
+        ? `${filters.ageLimits[0]}-${filters.ageLimits[1]}`
+        : "";
+    handleFilter(filters.searchQuery, ageQuery);
   } else {
+    // console.log("we are in storage users");
     users = storageUsers;
   }
   if (!users) {
@@ -92,6 +101,7 @@ function displayUsers(isNewUser, email, usersList) {
                   srcset=""
                   width="22"
                   height="22"
+                  onClick="editUserUiUpdate('${user.email}')"
                   class="mr-4 hover:bg-blue-400 cursor-pointer"
                 />
                 <img
@@ -108,12 +118,10 @@ function displayUsers(isNewUser, email, usersList) {
             </div>
          `;
       table.appendChild(trElement);
-
       // console.log(user);
     });
   } else {
     let trElement = document.createElement("div");
-    // trElement.setAttribute("id");
     trElement.innerHTML = `
               <div class="flex items-center space-x-4 py-3 bg-yellow-200 px-2 rounded-lg">
                 <div class="flex-1 min-w-0 flex justify-between px-2">
@@ -130,10 +138,10 @@ function displayUsers(isNewUser, email, usersList) {
          `;
     table.appendChild(trElement);
   }
-}
+};
 
 const setSearchBadges = (value) => {
-  console.log(value);
+  // console.log(value);
 
   if (value) {
     searchBadgeContainer.classList.remove("hidden");
@@ -149,7 +157,7 @@ const setSearchBadges = (value) => {
 };
 
 const setAgeBadges = (value) => {
-  console.log(value);
+  // console.log(value);
   if (value && value.length >= 2) {
     // console.log(value.length);
     ageBadgeContainer.classList.remove("hidden");
@@ -174,10 +182,45 @@ const removeAgeBadge = () => {
   ageInput.value = `Choose an age range`;
 };
 
+const editUserUiUpdate = (email) => {
+  /*
+    * UI changes for edit
+      0 - add the user data to form inputs
+      1 - update the text of the submit btn to update
+      2 - disable the email input
+      3 - update the gender boxes according to user
+  */
+  const user = getUserByEmail(email);
+  console.log(user);
+
+  // 0 - add the user data to form inputs
+  const formData = new FormData(form);
+  for (var pair of formData.keys()) {
+    // console.log(pair + "-" + user[pair]);
+    document.getElementById(pair).value = user[pair];
+  }
+
+  // 1 - update the text of the submit btn to edit
+  document.getElementById("submit-btn").innerHTML = "Update";
+
+  // 2 - disable the email input
+  document.getElementById("email").readOnly = true;
+
+  // 3 - update the gender boxes according to user
+  if (user.gender === "Male") {
+    document.getElementById("male").classList.add("selected");
+    document.getElementById("female").classList.remove("selected");
+  } else {
+    document.getElementById("female").classList.add("selected");
+    document.getElementById("male").classList.remove("selected");
+  }
+};
+
 export {
   displayUsers,
   setSearchBadges,
   setAgeBadges,
   removeSearchBadge,
   removeAgeBadge,
+  editUserUiUpdate,
 };

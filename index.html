@@ -9,7 +9,7 @@
     <title>Login Page</title>
   </head>
   <body>
-    <section class="my-container">
+    <section class="my-container relative">
       <div class="left p-25">
         <header>
           <img
@@ -33,7 +33,12 @@
             </div>
             <div class="input-wrapper">
               <label for="email">Email</label>
-              <input type="text" name="email" id="email" class="input-box" />
+              <input
+                type="text"
+                name="email"
+                id="email"
+                class="input-box read-only:bg-gray-200"
+              />
             </div>
             <div class="input-wrapper">
               <label for="age">Age</label>
@@ -62,7 +67,7 @@
               <div class="gender-btn" id="male">Male</div>
               <div class="gender-btn selected" id="female">Female</div>
             </div>
-            <button class="btn btn-primary">Register</button>
+            <button class="btn btn-primary" id="submit-btn">Register</button>
           </form>
           <div class="form-footer">
             Already Have an Account?
