@@ -136,25 +136,12 @@
         <div class="flex">
           <button
             id="states-button"
-            data-dropdown-toggle="dropdown-states"
             class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-500 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100"
             type="button"
           >
             AGE
           </button>
-          <div
-            id="dropdown-states"
-            class="z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow block"
-            data-popper-reference-hidden=""
-            data-popper-escaped=""
-            data-popper-placement="bottom"
-            style="
-              position: absolute;
-              inset: 0px auto auto 0px;
-              margin: 0px;
-              transform: translate(0px, 72px);
-            "
-          ></div>
+
           <label for="states" class="sr-only">Choose an age range</label>
           <select
             id="age-input"
@@ -176,7 +163,7 @@
             <span class="" id="age-badge"> 10-20 </span>
             <span
               class="text-red-700 font-bold cursor-pointer hover:text-base ml-1"
-              id="clear-search"
+              id="clear-age"
               >x</span
             >
           </span>

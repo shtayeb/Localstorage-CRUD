@@ -1,25 +1,25 @@
-// * done
-// as a user I should be able to register
-// * done
-// as a user I should be able to see the list of registered users
-// * done
-// as a user I should be able to remove a user
-// * done
-// handle male and female selection
-// * done
-// as a user I should be able to search in users: [name, email, address]
-// * done
-// search autocomplete
-// TODO
-// as a user I should be able to edit a user
-// TODO
-// as a user I should be able to filter user based on: [name, age, email, address]
-
-//
+/*
+  * Done - as a user I should be able to register
+  * Done - as a user I should be able to see the list of registered users
+  * Done - as a user I should be able to remove a user
+  * Done - handle male and female selection
+  * Done - as a user I should be able to search in users: [name, email, address]
+  * Done - as a user I should be able to filter user based on: [name, age, email, address]
+  * 
+  * DONE - User filter data should not reset or removed after page refresh
+    TODO - as a user I should be able to edit a user
+    TODO - User edit form data should not reset after refreshing the page
+    TODO - UX/UI
+    TODO - Clean coding
+    TODO - Alert notification: warning, success, danger
+    TODO - Brain Storming 
+    TODO - add name and email to searchfilter
+  
+*/
 
 import { saveUser, removeUser } from "./utils/storage.js";
 import { displayUsers, setAgeBadges, setSearchBadges } from "./utils/views.js";
-import { handleSearch, handleAgeFilter, handleFilter } from "./utils/utils.js";
+import { handleFilter, handleRemoveFilter } from "./utils/utils.js";
 
 // to bind the removeUser to window
 // or add an event Listner to the btn
@@ -31,9 +31,10 @@ const female = document.getElementById("female");
 // search
 const searchInput = document.getElementById("search-input");
 const searchSubmitBtn = document.getElementById("search-submit");
-const searchBadge = document.getElementById("search-badge");
-const searchBadgeContainer = document.getElementById("search-badge-container");
+// const searchBadge = document.getElementById("search-badge");
+// const searchBadgeContainer = document.getElementById("search-badge-container");
 const clearSearch = document.getElementById("clear-search");
+const clearAge = document.getElementById("clear-age");
 // age
 // const ageBadge = document.getElementById("age-badge");
 // const ageBadgeContainer = document.getElementById("age-badge-container");
@@ -87,40 +88,21 @@ form.addEventListener("submit", (e) => {
 
 // handle search functionality
 searchSubmitBtn.addEventListener("click", () => {
-  // if (searchBadgeContainer.classList.contains("hidden")) {
-  //   searchBadgeContainer.classList.remove("hidden");
-  // }
-  // searchBadge.innerHTML = searchInput.value;
   setSearchBadges();
-  // handleSearch(searchInput.value);
   handleFilter(searchInput.value, ageInput.value);
-});
-// searchInput.addEventListener("input", () => {
-//   if (searchBadgeContainer.classList.contains("hidden")) {
-//     searchBadgeContainer.classList.remove("hidden");
-//   }
-//   if (!searchInput.value) {
-//     searchBadgeContainer.classList.add("hidden");
-//   }
-//   searchBadge.innerHTML = searchInput.value;
-
-//   handleSearch(searchInput.value);
-// });
-// clear all search
-clearSearch.addEventListener("click", () => {
-  displayUsers();
-  searchBadgeContainer.classList.add("hidden");
-  searchBadge.innerHTML = "";
 });
 
 // handle age select filter
 ageInput.addEventListener("change", () => {
-  // if (ageBadgeContainer.classList.contains("hidden")) {
-  //   ageBadgeContainer.classList.remove("hidden");
-  // }
-  // ageBadge.innerHTML = ageInput.value;
   setAgeBadges();
   handleFilter(searchInput.value, ageInput.value);
+});
 
-  // handleAgeFilter(ageInput.value);
+clearSearch.addEventListener("click", () => {
+  // we send the age filter to function
+  handleRemoveFilter("search", ageInput.value);
+});
+clearAge.addEventListener("click", () => {
+  // we send the search to function
+  handleRemoveFilter("age", searchInput.value);
 });

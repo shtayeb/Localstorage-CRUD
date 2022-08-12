@@ -164,4 +164,20 @@ const setAgeBadges = (value) => {
   }
 };
 
-export { displayUsers, setSearchBadges, setAgeBadges };
+const removeSearchBadge = () => {
+  searchBadgeContainer.classList.add("hidden");
+  searchInput.value = "";
+};
+
+const removeAgeBadge = () => {
+  ageBadgeContainer.classList.add("hidden");
+  ageInput.value = `Choose an age range`;
+};
+
+export {
+  displayUsers,
+  setSearchBadges,
+  setAgeBadges,
+  removeSearchBadge,
+  removeAgeBadge,
+};
