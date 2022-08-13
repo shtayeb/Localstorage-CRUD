@@ -3,12 +3,8 @@ import { getUsers } from "./storage.js";
 
 const handleFilter = (searchQuery, ageQuery) => {
   const ageLimits = ageQuery.split("-");
-  console.log(ageLimits);
-  console.log(searchQuery);
-
-  // Dont do anything if filters are empty
-  // if (!searchQuery && ageLimits.length < 2) return;
-
+  // console.log(ageLimits);
+  // console.log(searchQuery);
   let users = [];
   let filteredUsersAddress;
   users = getUsers();

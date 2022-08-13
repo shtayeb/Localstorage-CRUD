@@ -10,11 +10,11 @@
   * DONE - Specific filter removal
   * DONE - as a user I should be able to edit a user
   * DONE - add name and email to searchfilter
-    TODO - User edit form data should not reset after refreshing the page
-    TODO - UX/UI
-    TODO - Brain Storming 
+  * DONE - User edit form data should not reset after refreshing the page
+  * DONE - Brain Storming 
+  * DONE - UX/UI
     TODO - Clean coding
-    TODO - Alert notification: warning, success, danger  
+    ? - Alert notification: warning, success, danger  
 */
 
 import { saveUser, removeUser, editUser } from "./utils/storage.js";
@@ -23,6 +23,7 @@ import {
   setAgeBadges,
   setSearchBadges,
   editUserUiUpdate,
+  setInEditingUser,
 } from "./utils/views.js";
 import { handleFilter, handleRemoveFilter } from "./utils/utils.js";
 
@@ -35,16 +36,10 @@ window.editUserUiUpdate = editUserUiUpdate;
 const form = document.getElementById("register");
 const male = document.getElementById("male");
 const female = document.getElementById("female");
-// search
 const searchInput = document.getElementById("search-input");
 const searchSubmitBtn = document.getElementById("search-submit");
-// const searchBadge = document.getElementById("search-badge");
-// const searchBadgeContainer = document.getElementById("search-badge-container");
 const clearSearch = document.getElementById("clear-search");
 const clearAge = document.getElementById("clear-age");
-// age
-// const ageBadge = document.getElementById("age-badge");
-// const ageBadgeContainer = document.getElementById("age-badge-container");
 const ageInput = document.getElementById("age-input");
 
 // filters from local storage
@@ -54,10 +49,10 @@ const filters = JSON.parse(localStorage.getItem("filters"));
 displayUsers();
 setAgeBadges(filters?.ageLimits);
 setSearchBadges(filters?.searchQuery);
+setInEditingUser();
 
 // Handle Selection of male and female
 male.addEventListener("click", (e) => {
-  // console.log("male");
   female.classList.remove("selected");
   male.classList.add("selected");
 });
@@ -109,10 +104,9 @@ form.addEventListener("submit", (e) => {
     // ! something is seriously wrong reload the page
     window.location.reload();
   }
-  // saveUser(user);
-  // displayUsers(true);
+
+  // reset the form after either task if complete
   form.reset();
-  // console.log(new FormData(form).get("name"));
 });
 
 // handle search functionality

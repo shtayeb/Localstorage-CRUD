@@ -42,6 +42,9 @@ const editUser = (email, user) => {
     }
   });
   localStorage.setItem("users", JSON.stringify(users));
+
+  // remove the editingUser from localstorage
+  localStorage.removeItem("editingUser");
 };
 
 export { saveUser, removeUser, getUsers, getUserByEmail, editUser };

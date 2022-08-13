@@ -15,7 +15,7 @@ const ageInput = document.getElementById("age-input");
 
 // functions
 const displayUsers = (isNewUser, email, usersList) => {
-  // only runs when we deleted a user
+  // Only runs when we deleted a user
   if (email) {
     console.log(email + " - " + "deleted");
     let userNode = document.getElementById(`${email}`);
@@ -36,34 +36,31 @@ const displayUsers = (isNewUser, email, usersList) => {
     users = [latestUser];
   } else if (usersList) {
     // only when we give it a users list
-    console.log("we are in userslist");
     table.innerHTML = "";
 
     if (usersList.length > 0) {
       users = usersList;
-      console.log("userlist> 0");
     } else {
-      console.log("userlist < 0");
-      // users = storageUsers;
       users = [];
     }
   } else if (
     filters &&
     (filters.ageLimits.length >= 2 || filters.searchQuery)
   ) {
-    // console.log("we are in the filter param");
+    // When we have filters in localstorage
     const ageQuery =
       filters.ageLimits.length >= 2
         ? `${filters.ageLimits[0]}-${filters.ageLimits[1]}`
         : "";
+    // get the filtered users
     handleFilter(filters.searchQuery, ageQuery);
   } else {
     // console.log("we are in storage users");
     users = storageUsers;
   }
-  if (!users) {
-    return;
-  }
+
+  if (!users) return;
+
   if (users.length > 0) {
     users.forEach((user, index) => {
       let trElement = document.createElement("div");
@@ -189,9 +186,10 @@ const editUserUiUpdate = (email) => {
       1 - update the text of the submit btn to update
       2 - disable the email input
       3 - update the gender boxes according to user
+      4 - save the user to local storage and remove it after the edit is done
   */
   const user = getUserByEmail(email);
-  console.log(user);
+  // console.log(user);
 
   // 0 - add the user data to form inputs
   const formData = new FormData(form);
@@ -214,6 +212,34 @@ const editUserUiUpdate = (email) => {
     document.getElementById("female").classList.add("selected");
     document.getElementById("male").classList.remove("selected");
   }
+
+  // 4 - save the user to the local storage
+  localStorage.setItem("editingUser", JSON.stringify(user));
+};
+
+const setInEditingUser = () => {
+  /*
+    How to Persist the user Editing
+      1 - get the editingUser from localstorage
+      2 - return if we dont have it
+      3 - set the form inputs to the user values
+      4 - set the innerHTML of the submit-btn to Update
+  */
+
+  //  1 - get the editingUser from localstorage
+  const user = JSON.parse(localStorage.getItem("editingUser"));
+  // 2 - return if we dont have it
+  if (!user) return;
+
+  //  3 - set the form inputs to the user values
+  const formData = new FormData(form);
+  for (var pair of formData.keys()) {
+    // console.log(pair + "-" + user[pair]);
+    document.getElementById(pair).value = user[pair];
+  }
+
+  // 4 - set the innerHTML of the submit-btn to Update
+  document.getElementById("submit-btn").innerHTML = "Update";
 };
 
 export {
@@ -223,4 +249,5 @@ export {
   removeSearchBadge,
   removeAgeBadge,
   editUserUiUpdate,
+  setInEditingUser,
 };
