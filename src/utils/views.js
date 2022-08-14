@@ -66,7 +66,7 @@ const displayUsers = (isNewUser, email, usersList) => {
       let trElement = document.createElement("div");
       trElement.setAttribute("id", user.email);
       trElement.innerHTML = `
-              <div class="flex items-center space-x-4 py-3">
+              <div class="flex items-center space-x-4 py-3 border-b-2 border-t-0 border-l-0 border-r-0">
               <p class="text-gray-500">${index + 1}</p>
               <div class="flex-shrink-0">
                 <img
@@ -78,11 +78,11 @@ const displayUsers = (isNewUser, email, usersList) => {
               
               <div class="flex-1 min-w-0">
                 <p
-                  class="text-sm font-medium text-gray-900 truncate "
+                  class="text-lg font-medium text-gray-900 truncate "
                 >
                 ${user.name}
                 </p>
-                <p class="text-sm text-gray-500 truncate ">
+                <p class="text-base text-gray-600 truncate ">
                 ${user.email}
                 </p>
                 <p class="text-sm text-gray-500 truncate ">
@@ -96,20 +96,20 @@ const displayUsers = (isNewUser, email, usersList) => {
                   src="./src/assets/images/edit.png"
                   alt="delete"
                   srcset=""
-                  width="22"
-                  height="22"
+                  width="20"
+                  height="20"
                   onClick="editUserUiUpdate('${user.email}')"
-                  class="mr-4 hover:bg-blue-400 cursor-pointer"
+                  class="mr-4 hover:bg-blue-400 cursor-pointer "
                 />
                 <img
                   src="./src/assets/images/delete.png"
                   alt="delete"
                   srcset=""
-                  width="22"
-                  height="22"
+                  width="20"
+                  height="20"
                   id="delete-btn"
                   onClick="removeUser('${user.email}')"
-                  class="mr-2 hover:bg-red-400 cursor-pointer"
+                  class="mr-2 hover:bg-red-400 cursor-pointer "
                 />
               </div>
             </div>

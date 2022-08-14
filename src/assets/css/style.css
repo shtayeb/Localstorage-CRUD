@@ -82,6 +82,7 @@ body {
 }
 .form-wrapper > header {
   margin-bottom: 25px;
+  font-weight: 700;
 }
 
 .form-wrapper > header > h1 {
@@ -109,6 +110,8 @@ body {
 
 .input-wrapper > label {
   font-weight: 500;
+  --tw-text-opacity: 1;
+  color: rgb(55 65 81 / var(--tw-text-opacity));
 }
 
 .btn {
