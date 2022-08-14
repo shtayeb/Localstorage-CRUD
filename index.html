@@ -35,7 +35,13 @@
           <form class="form" id="register">
             <div class="input-wrapper">
               <label for="name">Name</label>
-              <input type="text" name="name" id="name" class="input-box" />
+              <input
+                type="text"
+                name="name"
+                id="name"
+                class="input-box placeholder:text-sm"
+                placeholder="Full name(eg: John Doe)"
+              />
             </div>
             <div class="input-wrapper">
               <label for="email">Email</label>
@@ -43,7 +49,8 @@
                 type="text"
                 name="email"
                 id="email"
-                class="input-box read-only:bg-gray-200"
+                class="input-box read-only:bg-gray-200 placeholder:text-sm"
+                placeholder="Your email (eg: username@domain.com)"
               />
             </div>
             <div class="input-wrapper">
@@ -52,8 +59,9 @@
                 type="number"
                 name="age"
                 id="age"
-                class="input-box"
+                class="input-box placeholder:text-sm"
                 min="10"
+                placeholder="Your Age (eg: 20, 35, ...)"
               />
             </div>
             <div class="input-wrapper">
@@ -62,14 +70,22 @@
                 type="text"
                 name="address"
                 id="address"
-                class="input-box"
+                class="input-box placeholder:text-sm"
+                placeholder="Address (eg: kabul, USA, ...)"
               />
             </div>
             <div class="input-wrapper">
               <label for="image">Image URL</label>
-              <input type="text" name="image" id="image" class="input-box" />
+              <input
+                type="text"
+                name="image"
+                id="image"
+                class="input-box placeholder:text-sm"
+                placeholder="Image (https://domain.com/img/yourimage.jpg)"
+              />
             </div>
             <div class="flex pb-4 items-center">
+              <!-- <span class="font-medium mr-4">Gender</span> -->
               <div class="gender-btn" id="male">Male</div>
               <div class="gender-btn selected" id="female">Female</div>
             </div>
