@@ -13,7 +13,7 @@
   * DONE - User edit form data should not reset after refreshing the page
   * DONE - Brain Storming 
   * DONE - UX/UI
-    TODO - Clean coding
+  * Done - Clean coding
     ? - Alert notification: warning, success, danger  
 */
 
